@@ -63,10 +63,12 @@ public class PlayerShooting : MonoBehaviour
         gunParticles.Play ();
 
         gunLine.enabled = true;
-        gunLine.SetPosition (0, transform.position);
+		gunLine.SetPosition (0, Vector3.zero);
 
-		shootRay.origin = new Vector3(0, 0, 0);
-		shootRay.direction = transform.up;
+		shootRay.origin = Vector3.zero;
+		shootRay.direction = new Vector3(0, 1f, 0);
+
+		Debug.Log (transform.up);
 
 		shootHit = Physics2D.Raycast (shootRay.origin, shootRay.direction, range, shootableMask);
 
