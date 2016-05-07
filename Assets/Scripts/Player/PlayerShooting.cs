@@ -1,76 +1,84 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerShooting : MonoBehaviour
 {
-	public int damage = 10;
-	public float timeBetweenShooting = 0.15f;
-	public float shootingRange = 100f;
-	public float effectDisplayTime = 0.3f;
-
-	float timer;
-	Ray shootingRay;
-	RaycastHit shootingRayHit;
-	int shootableMask;
-
-	LineRenderer gunLine;
-	ParticleSystem fireParticle;
-	Light gunLight;
-	AudioSource gunFireAudio;
-
-	void Start ()
-	{
-		shootableMask = LayerMask.GetMask ("Shootable");
-
-		gunLine = GetComponent<LineRenderer> ();
-		fireParticle = GetComponent<ParticleSystem> ();
-		gunLight = GetComponent<Light> ();
-		gunFireAudio = GetComponent<AudioSource> ();
-	}
-
-	void Update ()
-	{
-		timer += Time.deltaTime;
-		if (Input.GetMouseButton (0) && timer >= timeBetweenShooting) {
-			Shoot ();
-			timer = 0f;	
-		}
-
-		if (timer >= timeBetweenShooting * effectDisplayTime) {
-			DisableEffects ();
-		}
+    public static int damagePerShot = 20;
+    public float timeBetweenBullets = 0.3f;
+    public float range = 500f;
 
 
-	}
+    float timer;
+    Ray2D shootRay;
+    RaycastHit2D shootHit;
+    int shootableMask;
+    ParticleSystem gunParticles;
+    LineRenderer gunLine;
+    AudioSource gunAudio;
+    Light gunLight;
+    float effectsDisplayTime = 0.2f;
 
-	void Shoot ()
-	{
-		Debug.Log ("gun fires.");
 
-		gunFireAudio.Play ();
+    void Awake ()
+    {
+        shootableMask = LayerMask.GetMask ("Shootable");
+        gunParticles = GetComponent<ParticleSystem> ();
+        gunLine = GetComponent <LineRenderer> ();
+        gunAudio = GetComponent<AudioSource> ();
+        gunLight = GetComponent<Light> ();
+    }
 
-		fireParticle.Stop ();
-		fireParticle.Play ();
 
-		gunLine.enabled = true;
-		gunLine.SetPosition (0, transform.position);
+    void Update ()
+    {
+        timer += Time.deltaTime;
 
-		shootingRay.origin = transform.position;
-		shootingRay.direction = new Vector3 (0, 1f, 0);
+		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
+        {
+            Shoot ();
+        }
 
-		if (Physics.Raycast (shootingRay, out shootingRayHit, shootableMask)) {
-			Debug.Log ("Hit shootable mask");
-			gunLine.SetPosition (1, shootingRayHit.point);
-		} else {
-			Debug.Log ("Didnt hit shootable mask");
-			gunLine.SetPosition (1, shootingRay.origin + shootingRay.direction * shootingRange);
-		}
-	}
+        if(timer >= timeBetweenBullets * effectsDisplayTime)
+        {
+            DisableEffects ();
+        }
+    }
 
-	void DisableEffects ()
-	{
-		gunLine.enabled = false;
-		gunFireAudio.Stop ();
-		fireParticle.Stop ();
-	}
+
+    public void DisableEffects ()
+    {
+        gunLine.enabled = false;
+        gunLight.enabled = false;
+    }
+
+
+    void Shoot ()
+    {
+        timer = 0f;
+
+        gunAudio.Play ();
+
+        gunLight.enabled = true;
+
+        gunParticles.Stop ();
+        gunParticles.Play ();
+
+        gunLine.enabled = true;
+        gunLine.SetPosition (0, transform.position);
+
+		shootRay.origin = new Vector3(0, 0, 0);
+		shootRay.direction = transform.up;
+
+		shootHit = Physics2D.Raycast (shootRay.origin, shootRay.direction, range, shootableMask);
+
+		if(shootHit.collider != null)
+        {
+			Debug.Log ("Hit the shootable mask");
+			gunLine.SetPosition (1, shootHit.point);
+        }
+        else
+        {
+			Debug.Log ("Didnt hit the shootable mask");
+            gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
+        }
+    }
 }
