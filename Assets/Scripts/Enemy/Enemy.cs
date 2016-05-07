@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 
-	GameObject player;
+	public float speed = 20f;
 
-	float speed = 50f;
+	GameObject player;
 	float maxDistance = 10f;
 	float range;
 	Vector2 offset;
