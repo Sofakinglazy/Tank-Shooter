@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
 	public float speed;
-	public int health = 100f;
+	public int health = 100;
 
 	Rigidbody2D rg2d;
 	float alterDegree = -90f; //To make the tank face to x axis
@@ -14,24 +14,20 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void Update (){
-		if (health < 100) {
+		if (health <= 0) {
 			Death ();
 		}
 	}
 
 	void FixedUpdate(){
-		// Get the input from keyboard 
 		float x = Input.GetAxisRaw("Horizontal");
 		float y = Input.GetAxisRaw("Vertical");
 
-		// Move
 		Move(x, y);
 
-		// Get the mouse position of mouse 
 		float mouseX = Input.mousePosition.x;
 		float mouseY = Input.mousePosition.y;
 
-		// Rotate
 		Rotate(mouseX, mouseY);
 	}
 
