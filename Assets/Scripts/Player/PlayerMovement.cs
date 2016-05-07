@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float speed;
 	public int health = 100;
+	public Boundary boundary;
 
 	Rigidbody2D rg2d;
 	float alterDegree = -90f; //To make the tank face to x axis
@@ -34,7 +35,12 @@ public class PlayerMovement : MonoBehaviour {
 	void Move(float x, float y){
 		Vector3 movement = new Vector3 (x, y, 0);
 		movement = movement.normalized * speed * Time.deltaTime;
-		rg2d.MovePosition (transform.position + movement);
+		Vector3 destination = transform.position + movement;
+
+		destination.x = Mathf.Clamp (destination.x, boundary.xMin, boundary.xMax);
+		destination.y = Mathf.Clamp (destination.y, boundary.yMin, boundary.yMax);
+
+		rg2d.MovePosition (destination);
 	}
 		
 	void Rotate(float x, float y){
