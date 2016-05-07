@@ -4,18 +4,20 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
 	public float speed;
-	public int health = 100;
+	public int maxHealth = 100;
+	public int currentHealth;
 	public Boundary boundary;
 
 	Rigidbody2D rg2d;
 	float alterDegree = -90f; //To make the tank face to x axis
 
 	void Start (){
+		currentHealth = maxHealth;
 		rg2d = GetComponent<Rigidbody2D> ();
 	}
 
 	void Update (){
-		if (health <= 0) {
+		if (currentHealth <= 0) {
 			Death ();
 		}
 	}
@@ -26,7 +28,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		Move(x, y);
 
-		float mouseX = Input.mousePosition.x;
+		float mouseX = Input.mousePosition.x; 
 		float mouseY = Input.mousePosition.y;
 
 		Rotate(mouseX, mouseY);
@@ -55,5 +57,7 @@ public class PlayerMovement : MonoBehaviour {
 		Debug.Log ("player is dead.");
 	}
 
-
+	public void TakeDamage (int damage){
+		currentHealth -= damage;
+	}
 }
