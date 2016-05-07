@@ -25,8 +25,6 @@ public class CameraFollow : MonoBehaviour {
 		destination.x = Mathf.Clamp (destination.x, boundary.xMin, boundary.xMax);
 		destination.y = Mathf.Clamp (destination.y, boundary.yMin, boundary.yMax);
 
-		Debug.Log (destination);
-
 		transform.position = Vector3.SmoothDamp (cameraPos, destination, ref velocity, dampTime);
 	}
 }
