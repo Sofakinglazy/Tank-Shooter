@@ -4,22 +4,13 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
 	public float speed;
-	public int maxHealth = 100;
-	public int currentHealth;
 	public Boundary boundary;
 
 	Rigidbody2D rg2d;
-	float alterDegree = -90f; //To make the tank face to x axis
+//	float alterDegree = -90f; //To make the tank face to x axis
 
 	void Start (){
-		currentHealth = maxHealth;
 		rg2d = GetComponent<Rigidbody2D> ();
-	}
-
-	void Update (){
-		if (currentHealth <= 0) {
-			Death ();
-		}
 	}
 
 	void FixedUpdate(){
@@ -49,15 +40,8 @@ public class PlayerMovement : MonoBehaviour {
 		Vector3 mousePos = new Vector3 (x, y, 0);
 		mousePos = Camera.main.ScreenToWorldPoint (mousePos);
 		Vector3 diff = mousePos - transform.position;
-		float angle = Mathf.Atan2 (diff.y, diff.x) * Mathf.Rad2Deg + alterDegree;
+		float angle = Mathf.Atan2 (diff.y, diff.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
 	}
 
-	void Death(){
-		Debug.Log ("player is dead.");
-	}
-
-	public void TakeDamage (int damage){
-		currentHealth -= damage;
-	}
 }

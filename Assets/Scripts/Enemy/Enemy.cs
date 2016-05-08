@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 	public float timeBetweenDamage = 0.5f;
 	int currentHealth;
 
-	float maxDistance = 20f;
+	float maxDistance = 10f;
 	Transform player;
 	float range;
 	Vector3 offset;
@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
 	void Rotate ()
 	{
 		offset = player.transform.position - transform.position;
-		float angle = Mathf.Atan2 (offset.y, offset.x) * Mathf.Rad2Deg - 90f;
+		float angle = Mathf.Atan2 (offset.y, offset.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis (angle, new Vector3 (0, 0, 1));
 	}
 
@@ -69,6 +69,12 @@ public class Enemy : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.CompareTag ("Player")) {
 			withinDistance = true;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D other){
+		if (other.gameObject.CompareTag ("Player")) {
+			withinDistance = false;
 		}
 	}
 }
