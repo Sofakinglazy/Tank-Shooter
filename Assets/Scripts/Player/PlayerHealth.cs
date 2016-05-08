@@ -12,6 +12,10 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void Update (){
+		if (currentHealth > maxHealth) {
+			currentHealth = maxHealth;
+		}
+
 		if (currentHealth <= 0) {
 			Death ();
 		}
@@ -24,5 +28,10 @@ public class PlayerHealth : MonoBehaviour {
 	public virtual void TakeDamage (int damage){
 		currentHealth -= damage;
 		Debug.Log (currentHealth);
+	}
+
+	public void AddHealthPoint(int healthPoint){
+		currentHealth += healthPoint;
+		Debug.Log ("Health gets added!" + currentHealth);
 	}
 }
