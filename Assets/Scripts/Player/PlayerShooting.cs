@@ -5,7 +5,10 @@ public class PlayerShooting : MonoBehaviour
     public static int damage = 20;
     public float timeBetweenBullets = 0.3f;
     public float range = 100f;
-	public int ammo = 100;
+
+	public int startAmmo = 50;
+	[HideInInspector]
+	public int currentAmmo;
 
 	public LayerMask mask;
 
@@ -23,8 +26,10 @@ public class PlayerShooting : MonoBehaviour
     float effectsDisplayTime = 0.2f;
 
 
-    void Awake ()
+    void Start ()
     {
+		currentAmmo = startAmmo;
+
         gunParticles = GetComponent<ParticleSystem> ();
         gunLine = GetComponent <LineRenderer> ();
         gunLight = GetComponent<Light> ();
@@ -40,9 +45,9 @@ public class PlayerShooting : MonoBehaviour
         {
 			timer = 0f;
 
-			if (ammo > 0)
+			if (currentAmmo > 0)
 				Shoot ();
-			else
+			else 
 				PlayDryFireEffect ();
         } 
 
@@ -50,6 +55,7 @@ public class PlayerShooting : MonoBehaviour
         {
             DisableEffects ();
         }
+
     }
 
 
@@ -63,9 +69,9 @@ public class PlayerShooting : MonoBehaviour
     void Shoot ()
     {
 
-		ammo--;
+		currentAmmo--;
 
-		Debug.Log ("Ammo" + ammo);
+		Debug.Log ("Ammo" + currentAmmo);
 
 		audioSource.clip = shootAudio;
         audioSource.Play ();
@@ -110,5 +116,10 @@ public class PlayerShooting : MonoBehaviour
 		PlayFireParticleEffect ();
 
 		Debug.Log ("No ammo left!");
+	}
+
+	public void AddAmmo (int ammoAmount){
+		currentAmmo += ammoAmount;
+		Debug.Log ("current ammo:" + currentAmmo);
 	}
 }
