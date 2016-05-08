@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: bea3cedd1412d401882a3ab960e0a2e7
-timeCreated: 1462637975
+timeCreated: 1462718447
 licenseType: Pro
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - shootAudio: {fileID: 8300000, guid: 6279fc83a9e3952489eee7b01643ac67, type: 3}
+  - dryFireAudio: {fileID: 8300000, guid: 1f1bdccdad8a42145a0df02d9ae9cd32, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

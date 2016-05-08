@@ -2,19 +2,24 @@
 
 public class PlayerShooting : MonoBehaviour
 {
-    public static int damagePerShot = 20;
+    public static int damage = 20;
     public float timeBetweenBullets = 0.3f;
     public float range = 100f;
+	public int ammo = 100;
 
 	public LayerMask mask;
+
+	public AudioClip shootAudio;
+	public AudioClip dryFireAudio;
+
 
     float timer;
 	Ray2D shootRay;
 	RaycastHit2D shootHit;
     ParticleSystem gunParticles;
     LineRenderer gunLine;
-    AudioSource gunAudio;
     Light gunLight;
+	AudioSource audioSource;
     float effectsDisplayTime = 0.2f;
 
 
@@ -22,8 +27,8 @@ public class PlayerShooting : MonoBehaviour
     {
         gunParticles = GetComponent<ParticleSystem> ();
         gunLine = GetComponent <LineRenderer> ();
-        gunAudio = GetComponent<AudioSource> ();
         gunLight = GetComponent<Light> ();
+		audioSource = GetComponent<AudioSource> ();
     }
 
 
@@ -31,10 +36,15 @@ public class PlayerShooting : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
+		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0 )
         {
-            Shoot ();
-        }
+			timer = 0f;
+
+			if (ammo > 0)
+				Shoot ();
+			else
+				PlayDryFireEffect ();
+        } 
 
         if(timer >= timeBetweenBullets * effectsDisplayTime)
         {
@@ -52,14 +62,15 @@ public class PlayerShooting : MonoBehaviour
 
     void Shoot ()
     {
-        timer = 0f;
 
-        gunAudio.Play ();
+		ammo--;
 
-        gunLight.enabled = true;
+		Debug.Log ("Ammo" + ammo);
 
-        gunParticles.Stop ();
-        gunParticles.Play ();
+		audioSource.clip = shootAudio;
+        audioSource.Play ();
+
+		PlayFireParticleEffect ();
 
         gunLine.enabled = true;
 
@@ -72,13 +83,11 @@ public class PlayerShooting : MonoBehaviour
 
 		if(shootHit.collider != null)
         {
-			
-			Debug.Log ("Hit the shootable mask");
-
-			if (shootHit.collider.CompareTag ("Alive")) {
-				Debug.Log ("That is an enemy.");
+			if (shootHit.collider.CompareTag ("Enemy")) {
+				GameObject enemy = shootHit.collider.gameObject;
+				enemy.GetComponent<EnemyHealth> ().TakeDamage (damage, shootHit.point);
+				Debug.Log ("Enemy health: " + enemy.GetComponent<EnemyHealth>().currentHealth);
 			}
-
 			gunLine.SetPosition (1, shootHit.point);
         }
         else
@@ -86,4 +95,20 @@ public class PlayerShooting : MonoBehaviour
 			gunLine.SetPosition (1, origin + direction);
         }
     }
+
+	void PlayFireParticleEffect ()
+	{
+		gunLight.enabled = true;
+		gunParticles.Stop ();
+		gunParticles.Play ();
+	}
+
+	void PlayDryFireEffect(){
+		audioSource.clip = dryFireAudio;
+		audioSource.Play ();
+
+		PlayFireParticleEffect ();
+
+		Debug.Log ("No ammo left!");
+	}
 }

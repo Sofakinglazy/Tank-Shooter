@@ -17,11 +17,11 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	void Death(){
+	public virtual void Death(){
 		Debug.Log ("player is dead.");
 	}
 
-	public void TakeDamage (int damage){
+	public virtual void TakeDamage (int damage){
 		currentHealth -= damage;
 		Debug.Log (currentHealth);
 	}
