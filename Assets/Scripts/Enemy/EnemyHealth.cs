@@ -18,6 +18,7 @@ public class EnemyHealth : PlayerHealth{
 
 
 	public override void Death (){
+		Destroy (gameObject);
 		Debug.Log ("Enermy is dead!");
 	}
 
