@@ -97,7 +97,7 @@ public class PlayerShooting : MonoBehaviour
 
 			if (shootHit.collider.CompareTag ("Barrel")) {
 				GameObject barrel = shootHit.collider.gameObject;
-				barrel.GetComponent<ExposiveBarrel> ().TakeDamage (damage);
+				barrel.GetComponent<ExplosiveBarrel> ().TakeDamage (damage);
 			}
 
 			gunLine.SetPosition (1, shootHit.point);
