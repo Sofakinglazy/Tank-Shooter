@@ -6,7 +6,7 @@ public class EnemyHealth : PlayerHealth{
 	ParticleSystem hitParticles;
 
 	void Start(){
-		this.currentHealth = maxHealth;
+		currentHealth = startHealth;
 		hitParticles = GetComponent<ParticleSystem> ();
 	}
 
@@ -17,7 +17,7 @@ public class EnemyHealth : PlayerHealth{
 	}
 
 
-	public override void Death (){
+	protected override void Death (){
 		Destroy (gameObject);
 		Debug.Log ("Enermy is dead!");
 	}

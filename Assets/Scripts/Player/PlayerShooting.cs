@@ -94,6 +94,12 @@ public class PlayerShooting : MonoBehaviour
 				enemy.GetComponent<EnemyHealth> ().TakeDamage (damage, shootHit.point);
 				Debug.Log ("Enemy health: " + enemy.GetComponent<EnemyHealth>().currentHealth);
 			}
+
+			if (shootHit.collider.CompareTag ("Barrel")) {
+				GameObject barrel = shootHit.collider.gameObject;
+				barrel.GetComponent<ExposiveBarrel> ().TakeDamage (damage);
+			}
+
 			gunLine.SetPosition (1, shootHit.point);
         }
         else
