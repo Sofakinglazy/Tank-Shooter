@@ -15,10 +15,8 @@ public class GameController : MonoBehaviour
 	public Boundary boundary;
 
 	public float timeBetweenEnemySpawn;
-	float enemyTimer;
 	int enemyCount;
 
-	float pickupTimer;
 	public float timeBetweenPickupSpawn;
 	int pickupCount;
 
@@ -33,13 +31,13 @@ public class GameController : MonoBehaviour
 
 	void Update ()
 	{
-		enemyTimer += Time.deltaTime;
-		if (enemyTimer > timeBetweenEnemySpawn && enemyCount < 100 /*enemyCount < LevelManager.LEVELS_PARA [4 * level]*/) {
+		timer[1] += Time.deltaTime;
+		if (timer[1] > timeBetweenEnemySpawn && enemyCount < 100 /*enemyCount < LevelManager.LEVELS_PARA [4 * level]*/) {
 			SpawnEnemies ();
 		}
 
-		pickupTimer += Time.deltaTime;
-		if (pickupTimer > timeBetweenPickupSpawn && pickupCount < LevelManager.LEVELS_PARA [4 * level + 2]) {
+		timer[2] += Time.deltaTime;
+		if (timer[2] > timeBetweenPickupSpawn && pickupCount < LevelManager.LEVELS_PARA [4 * level + 2]) {
 			SpawnPickup ();
 		}
 
@@ -55,14 +53,12 @@ public class GameController : MonoBehaviour
 
 	void SpawnEnemies ()
 	{
-		int indexSpawn = GetRandomNum (0f, enemySpawn.Length);
-		int indexEnemy = GetRandomNum (0f, enemies.Length);
-
-		Debug.Log ("Spawn: " + indexSpawn + " Enemy: " + indexEnemy);
+		int indexSpawn = GetRandomNum (0f, enemySpawn.Length - 1);
+		int indexEnemy = GetRandomNum (0f, enemies.Length - 1);
 
 		Instantiate (enemies [indexEnemy], enemySpawn [indexSpawn].position, Quaternion.identity);
 
-		enemyTimer = 0f;
+		timer[1] = 0f;
 		enemyCount++;
 	}
 
@@ -78,7 +74,7 @@ public class GameController : MonoBehaviour
 		Vector3 randPos = new Vector3 (GetRandomNum (boundary.xMin, boundary.xMax), GetRandomNum (boundary.yMin, boundary.yMax), 0f);
 		Instantiate (ammoPack, randPos, Quaternion.identity);
 
-		pickupTimer = 0f;
+		timer[2] = 0f;
 		pickupCount++;
 	}
 

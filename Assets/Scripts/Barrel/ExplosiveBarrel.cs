@@ -31,6 +31,7 @@ public class ExplosiveBarrel : MonoBehaviour {
 
 		GameObject exploseObject = Instantiate (exploseEffect, transform.position, Quaternion.identity) as GameObject;
 		exploseObject.GetComponent<ParticleSystem> ().Play();
+		exploseObject.GetComponent<AudioSource> ().Play ();
 
 		Destroy (gameObject);
 		Destroy (exploseObject, 2);
