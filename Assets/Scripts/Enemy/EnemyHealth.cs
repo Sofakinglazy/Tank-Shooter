@@ -3,6 +3,7 @@ using System.Collections;
 
 public class EnemyHealth : PlayerHealth{
 
+	public int scorePoints;
 	ParticleSystem hitParticles;
 
 	void Start(){
@@ -19,6 +20,7 @@ public class EnemyHealth : PlayerHealth{
 
 	protected override void Death (){
 		Destroy (gameObject);
+		UIManager.score += scorePoints;
 		Debug.Log ("Enermy is dead!");
 	}
 

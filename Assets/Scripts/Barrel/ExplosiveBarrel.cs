@@ -46,6 +46,7 @@ public class ExplosiveBarrel : MonoBehaviour {
 				}
 				if (hit.CompareTag ("Player")) {
 					hit.GetComponent<PlayerHealth> ().TakeDamage (damage);
+					Debug.Log ("Player takes damage!");
 				}
 			}
 		}
