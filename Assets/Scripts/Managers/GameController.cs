@@ -32,25 +32,30 @@ public class GameController : MonoBehaviour
 	void Update ()
 	{
 		timer[1] += Time.deltaTime;
-		if (timer[1] > timeBetweenEnemySpawn && enemyCount < LevelManager.LEVELS_PARA [5 * level]) {
+		if (timer[1] > timeBetweenEnemySpawn && enemyCount < LevelManager.PARAS [5 * level]) {
 			SpawnEnemies ();
 		}
 
 		timer[2] += Time.deltaTime;
-		if (timer[2] > timeBetweenPickupSpawn && pickupCount < LevelManager.LEVELS_PARA [5 * level + 2]) {
+		if (timer[2] > timeBetweenPickupSpawn && pickupCount < LevelManager.PARAS [5 * level + 2]) {
 			SpawnPickup ();
 		}
 
 		UIManager.instance.ShowLevel (level + 1);
 
 		timer [0] += Time.deltaTime;
-		if (timer [0] > 30f && level < 10) {
+		if (timer [0] > LevelManager.PARAS [5 * level + 4] && level < 10) {
 			level++;
 			enemyCount = 0;
 			pickupCount = 0;
 			timer [0] = 0;
 			Debug.Log ("Level up");
 		}
+		UIManager.instance.ShowTime (GetRemainTime());
+	}
+
+	float GetRemainTime(){
+		return LevelManager.PARAS [5 * level + 4] - timer [0];
 	}
 
 	void SpawnEnemies ()
@@ -85,4 +90,6 @@ public class GameController : MonoBehaviour
 		float random = Random.Range (min, max);
 		return Mathf.RoundToInt (random);
 	}
+
+
 }

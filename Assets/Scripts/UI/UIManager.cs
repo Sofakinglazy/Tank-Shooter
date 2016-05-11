@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 	public static UIManager instance = null;
 
+	public Text timeText;
 	public Text levelText;
 	public Text scoreText;
 	public Image healthIcon;
@@ -13,11 +14,13 @@ public class UIManager : MonoBehaviour {
 	public Button againBtn;
 
 	GameObject player;
+	string time;
 	int score;
 	int level;
 
 	void Start (){
 		player = GameObject.FindGameObjectWithTag ("Player");
+		timeText.enabled = true;
 		levelText.enabled = true;
 		scoreText.enabled = true; 
 		healthIcon.enabled = true;
@@ -33,7 +36,6 @@ public class UIManager : MonoBehaviour {
 			Destroy (gameObject);
 			return;
 		}
-
 		DontDestroyOnLoad (gameObject);
 	}
 
@@ -42,10 +44,15 @@ public class UIManager : MonoBehaviour {
 	}
 
 	void Update (){
+		timeText.text = time;
 		scoreText.text = "Score: " + score;
 		levelText.text = "Level: " + level;
 
 		healthSlider.value = player.GetComponent<PlayerHealth> ().currentHealth;
+	}
+
+	public void ShowTime(float time){
+		this.time = FormatTime (time);
 	}
 
 	public void ShowLevel(int level){
@@ -56,10 +63,17 @@ public class UIManager : MonoBehaviour {
 		score += scorePoint;
 	}
 
+	string FormatTime(float time){
+		string min = Mathf.Floor (time / 60).ToString("00");
+		string sec = Mathf.RoundToInt (time % 60).ToString("00");
+		return min + " : " + sec;
+	}
+
 	public void DeathUI(){
 		deadText.gameObject.SetActive(true);
 		againBtn.gameObject.SetActive (true);
 		healthSlider.gameObject.SetActive(false);
+		timeText.enabled = false;
 		levelText.enabled = false;
 		scoreText.enabled = false;
 		healthIcon.enabled = false;
