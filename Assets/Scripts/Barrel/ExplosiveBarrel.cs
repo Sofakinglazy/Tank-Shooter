@@ -43,7 +43,7 @@ public class ExplosiveBarrel : MonoBehaviour {
 			for (int i = 0; i < exploseHit.Length; i++) {
 				GameObject hit = exploseHit [i].collider.gameObject;
 				if (hit.CompareTag ("Enemy")) {
-					hit.GetComponent<EnemyHealth> ().Death ();
+					hit.GetComponent<EnemyHealth> ().currentHealth = 0;
 				}
 				if (hit.CompareTag ("Player")) {
 					hit.GetComponent<PlayerHealth> ().TakeDamage (damage);

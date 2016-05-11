@@ -29,6 +29,7 @@ public class EnemyHealth : PlayerHealth{
 		yield return new WaitForSeconds (animLength);
 		UIManager.instance.AddScore (scorePoints);
 		Destroy (gameObject);
+		yield return new WaitForSeconds (0);
 	}
 
 	public virtual void TakeDamage(int damage, Vector3 hitPoint){
