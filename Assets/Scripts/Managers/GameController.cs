@@ -55,8 +55,8 @@ public class GameController : MonoBehaviour
 
 	void SpawnEnemies ()
 	{
-		int indexSpawn = GetRandomNum (0, enemySpawn.Length);
-		int indexEnemy = GetRandomNum (0, enemies.Length);
+		int indexSpawn = GetRandomNum (0f, enemySpawn.Length);
+		int indexEnemy = GetRandomNum (0f, enemies.Length);
 
 		Instantiate (enemies [indexEnemy], enemySpawn [indexSpawn].position, Quaternion.identity);
 
@@ -82,7 +82,7 @@ public class GameController : MonoBehaviour
 
 	int GetRandomNum (float min, float max)
 	{
-		float random = Random.Range (0, max);
+		float random = Random.Range (min, max);
 		return (int) Mathf.Round (random);
 	}
 }
