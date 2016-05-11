@@ -17,13 +17,15 @@ public class PlayerHealth : MonoBehaviour {
 		}
 
 		if (currentHealth <= 0) {
-			Death ();
+			StartCoroutine (Death ());
 		}
 	}
 
-	public virtual void Death(){
+	public virtual IEnumerator Death(){
 		Debug.Log ("player is dead.");
 		UIManager.instance.DeathUI ();
+		yield return new WaitForSeconds (0);
+
 //		Application.LoadLevel (Application.loadedLevel);
 	}
 

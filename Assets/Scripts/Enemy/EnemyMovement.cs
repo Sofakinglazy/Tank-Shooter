@@ -10,6 +10,8 @@ public class EnemyMovement : MonoBehaviour
 	Transform player;
 	float range;
 	Vector3 offset;
+	[HideInInspector]
+	public bool isDead;
 
 	void Start ()
 	{
@@ -20,7 +22,7 @@ public class EnemyMovement : MonoBehaviour
 	{
 		range = Vector2.Distance (transform.position, player.position);
 
-		if (range > maxDistance) {
+		if (range > maxDistance && !isDead) {
 			MoveToward ();
 		}
 		Rotate ();

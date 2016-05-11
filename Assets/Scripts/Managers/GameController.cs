@@ -32,14 +32,16 @@ public class GameController : MonoBehaviour
 	void Update ()
 	{
 		timer[1] += Time.deltaTime;
-		if (timer[1] > timeBetweenEnemySpawn && enemyCount < 100 /*enemyCount < LevelManager.LEVELS_PARA [4 * level]*/) {
+		if (timer[1] > timeBetweenEnemySpawn && enemyCount < LevelManager.LEVELS_PARA [5 * level]) {
 			SpawnEnemies ();
 		}
 
 		timer[2] += Time.deltaTime;
-		if (timer[2] > timeBetweenPickupSpawn && pickupCount < LevelManager.LEVELS_PARA [4 * level + 2]) {
+		if (timer[2] > timeBetweenPickupSpawn && pickupCount < LevelManager.LEVELS_PARA [5 * level + 2]) {
 			SpawnPickup ();
 		}
+
+		UIManager.instance.ShowLevel (level + 1);
 
 		timer [0] += Time.deltaTime;
 		if (timer [0] > 30f && level < 10) {
@@ -72,7 +74,7 @@ public class GameController : MonoBehaviour
 	void SpawnPickup ()
 	{
 		Vector3 randPos = new Vector3 (GetRandomNum (boundary.xMin, boundary.xMax), GetRandomNum (boundary.yMin, boundary.yMax), 0f);
-		Instantiate (ammoPack, randPos, Quaternion.identity);
+		Instantiate (healthPack, randPos, Quaternion.identity);
 
 		timer[2] = 0f;
 		pickupCount++;
