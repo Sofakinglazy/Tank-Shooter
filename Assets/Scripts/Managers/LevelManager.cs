@@ -16,4 +16,24 @@ public class LevelManager : MonoBehaviour {
 		/* Level9 */	18,		4,			3,			3,				180,
 		/* Level0 */	20,		4,			4,			3,				200
 	};
+
+	public static int ENERMY(int level){
+		return PARAS [5 * level];
+	}
+
+	public static int AMMO_PACK(int level){
+		return PARAS [5 * level + 1];
+	}
+
+	public static int HEALTH_PACK(int level){
+		return PARAS [5 * level + 2];
+	}
+
+	public static int BARREL(int level){
+		return PARAS [5 * level + 3];
+	}
+
+	public static int TIME(int level){
+		return PARAS [5 * level + 4];
+	}
 }
