@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour {
 			Destroy (gameObject);
 			return;
 		}
-		DontDestroyOnLoad (gameObject);
+		//DontDestroyOnLoad (gameObject);
 	}
 
 	void OnDestroy(){
@@ -78,8 +78,5 @@ public class UIManager : MonoBehaviour {
 		scoreText.enabled = false;
 		healthIcon.enabled = false;
 	}
-
-	public void LoadLevel(){
-		Debug.Log ("Load level");
-	}
+		
 }

@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
 			Destroy (gameObject);
 			return;
 		}
-		DontDestroyOnLoad (gameObject);
+		//DontDestroyOnLoad (gameObject);
 	}
 
 	void OnDestroy(){
@@ -59,11 +59,8 @@ public class GameController : MonoBehaviour
 		timer [0] += Time.deltaTime;
 		if ((timer [0] > LevelManager.TIME(level) || enemyKilled == LevelManager.ENERMY(level)) && level < 10) {
 			level++;
-			enemyCount = 0;
-			pickupCount = 0;
-			timer [0] = 0;
+			Reset ();
 			DestroyRestEnemies ();
-			Debug.Log ("Level up");
 		}
 		UIManager.instance.ShowTime (LevelManager.TIME(level) - timer [0]);
 	}
@@ -73,6 +70,12 @@ public class GameController : MonoBehaviour
 		for (int i = 0; i < rest.Length; i++) {
 			rest [i].GetComponent<EnemyHealth> ().currentHealth = 0;
 		}
+	}
+
+	void Reset (){
+		enemyCount = 0;
+		pickupCount = 0;
+		timer [0] = 0;
 	}
 		
 	void SpawnEnemies ()
@@ -110,5 +113,10 @@ public class GameController : MonoBehaviour
 
 	public void Increment(){
 		enemyKilled++;
+	}
+
+	public void LoadLevel(){
+		Application.LoadLevel (0);
+		Debug.Log ("Load level");
 	}
 }
