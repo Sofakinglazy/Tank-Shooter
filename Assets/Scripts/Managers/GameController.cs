@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 	void Update ()
 	{
 		enemyTimer += Time.deltaTime;
-		if (enemyTimer > timeBetweenEnemySpawn && enemyCount < LevelManager.LEVELS_PARA [4 * level]) {
+		if (enemyTimer > timeBetweenEnemySpawn && enemyCount < 100 /*enemyCount < LevelManager.LEVELS_PARA [4 * level]*/) {
 			SpawnEnemies ();
 		}
 
@@ -57,6 +57,8 @@ public class GameController : MonoBehaviour
 	{
 		int indexSpawn = GetRandomNum (0f, enemySpawn.Length);
 		int indexEnemy = GetRandomNum (0f, enemies.Length);
+
+		Debug.Log ("Spawn: " + indexSpawn + " Enemy: " + indexEnemy);
 
 		Instantiate (enemies [indexEnemy], enemySpawn [indexSpawn].position, Quaternion.identity);
 
@@ -83,6 +85,6 @@ public class GameController : MonoBehaviour
 	int GetRandomNum (float min, float max)
 	{
 		float random = Random.Range (min, max);
-		return (int) Mathf.Round (random);
+		return Mathf.RoundToInt (random);
 	}
 }

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 	public static UIManager instance = null;
 
-	public int score;
-
 	public Text scoreText;
 	public Image healthIcon;
 	public Slider healthSlider;
@@ -14,6 +12,7 @@ public class UIManager : MonoBehaviour {
 	public Button againBtn;
 
 	GameObject player;
+	static int score;
 
 	void Start (){
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -45,8 +44,8 @@ public class UIManager : MonoBehaviour {
 		healthSlider.value = player.GetComponent<PlayerHealth> ().currentHealth;
 	}
 
-	public int AddScore (int scorePoint){
-		return score + scorePoint;
+	public void AddScore (int scorePoint){
+		score += scorePoint;
 	}
 
 	public void DeathUI(){
@@ -55,5 +54,9 @@ public class UIManager : MonoBehaviour {
 		healthSlider.gameObject.SetActive(false);
 		scoreText.enabled = false;
 		healthIcon.enabled = false;
+	}
+
+	public void LoadLevel(){
+		Debug.Log ("Load level");
 	}
 }

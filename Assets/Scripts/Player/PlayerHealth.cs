@@ -21,7 +21,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	protected virtual void Death(){
+	public virtual void Death(){
 		Debug.Log ("player is dead.");
 		UIManager.instance.DeathUI ();
 //		Application.LoadLevel (Application.loadedLevel);
