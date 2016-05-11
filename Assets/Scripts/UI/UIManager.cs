@@ -5,19 +5,23 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 	public static UIManager instance = null;
 
-	public static int score;
+	public int score;
 
 	public Text scoreText;
+	public Image healthIcon;
 	public Slider healthSlider;
 	public Text deadText;
+	public Button againBtn;
 
 	GameObject player;
 
 	void Start (){
 		player = GameObject.FindGameObjectWithTag ("Player");
 		scoreText.enabled = true; 
-		healthSlider.enabled = true;
-		deadText.enabled = false;
+		healthIcon.enabled = true;
+		healthSlider.gameObject.SetActive(true);
+		deadText.gameObject.SetActive(false);
+		againBtn.gameObject.SetActive (false);
 	}
 
 	void Awake (){
@@ -31,16 +35,25 @@ public class UIManager : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 	}
 
+	void OnDestroy(){
+		instance = null;
+	}
+
 	void Update (){
 		scoreText.text = "Score: " + score;
 
 		healthSlider.value = player.GetComponent<PlayerHealth> ().currentHealth;
 	}
 
-//	public static void deadUI(){
-//		deadText.enabled = true;
-//
-//		scoreText.enabled = false; 
-//		healthSlider.enabled = false;
-//	}
+	public int AddScore (int scorePoint){
+		return score + scorePoint;
+	}
+
+	public void DeathUI(){
+		deadText.gameObject.SetActive(true);
+		againBtn.gameObject.SetActive (true);
+		healthSlider.gameObject.SetActive(false);
+		scoreText.enabled = false;
+		healthIcon.enabled = false;
+	}
 }

@@ -20,7 +20,7 @@ public class EnemyHealth : PlayerHealth{
 
 	protected override void Death (){
 		Destroy (gameObject);
-		UIManager.score += scorePoints;
+		UIManager.instance.AddScore (scorePoints);
 		Debug.Log ("Enermy is dead!");
 	}
 
