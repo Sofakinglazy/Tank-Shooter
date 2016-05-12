@@ -22,11 +22,11 @@ public class EnemyHealth : PlayerHealth{
 
 
 	public override IEnumerator Death (){
-		
 		GetComponent<EnemyMovement> ().isDead = true;
 		anim.SetTrigger ("Explose");
 		float animLength = GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).length;
 		yield return new WaitForSeconds (animLength);
+		GameController.instance.IncrementDeathEnemy ();
 		UIManager.instance.AddScore (scorePoints);
 		Destroy (gameObject);
 		yield return new WaitForSeconds (0);

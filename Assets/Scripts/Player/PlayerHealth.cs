@@ -18,11 +18,14 @@ public class PlayerHealth : MonoBehaviour {
 
 		if (currentHealth <= 0) {
 			StartCoroutine (Death ());
+		} else {
+			Time.timeScale = 1;
 		}
 	}
 
 	public virtual IEnumerator Death(){
 		UIManager.instance.DeathUI ();
+		Time.timeScale = 0;
 		yield return new WaitForSeconds (0);
 	}
 

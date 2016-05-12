@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -35,7 +36,6 @@ public class GameController : MonoBehaviour
 			Destroy (gameObject);
 			return;
 		}
-		//DontDestroyOnLoad (gameObject);
 	}
 
 	void OnDestroy(){
@@ -111,12 +111,11 @@ public class GameController : MonoBehaviour
 		return Mathf.RoundToInt (random);
 	}
 
-	public void Increment(){
+	public void IncrementDeathEnemy(){
 		enemyKilled++;
 	}
 
 	public void LoadLevel(){
-		Application.LoadLevel (0);
-		Debug.Log ("Load level");
+		SceneManager.LoadScene (0);
 	}
 }

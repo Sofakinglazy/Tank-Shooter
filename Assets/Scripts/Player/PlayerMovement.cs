@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour {
 	public Boundary boundary;
 
 	Rigidbody2D rg2d;
-//	float alterDegree = -90f; //To make the tank face to x axis
 
 	void Start (){
 		rg2d = GetComponent<Rigidbody2D> ();
@@ -17,7 +16,7 @@ public class PlayerMovement : MonoBehaviour {
 		float x = Input.GetAxisRaw("Horizontal");
 		float y = Input.GetAxisRaw("Vertical");
 
-		Move(x, y);
+		Move (x, y);
 
 		float mouseX = Input.mousePosition.x; 
 		float mouseY = Input.mousePosition.y;
