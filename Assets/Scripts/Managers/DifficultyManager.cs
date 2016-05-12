@@ -36,15 +36,18 @@ public class DifficultyManager : MonoBehaviour {
 		int rank = CalcuPlayerRank (timeLeft, enemyKilled, level);
 		MathModel (rank);
 
-		for (int i = 0; i < 4; i++){
-			LevelManager.PARAS [4 * i] = Mathf.RoundToInt(LevelManager.PARAS [4 * i] * adjust);
-			LevelManager.PARAS [4 * i + 1] = Mathf.RoundToInt(LevelManager.PARAS [4 * i + 1] / adjust);
-			LevelManager.PARAS [4 * i + 2] = Mathf.RoundToInt(LevelManager.PARAS [4 * i + 2] / adjust);
-			LevelManager.PARAS [4 * i + 3] = Mathf.RoundToInt(LevelManager.PARAS [4 * i + 3] * adjust);
-		}
+		AlterNextLevelParas (level + 1);
 			
 		LevelManager lm = new LevelManager ();
 		Debug.Log (lm);
+	}
+
+	void AlterNextLevelParas (int nextLevel)
+	{
+		LevelManager.PARAS [4 * nextLevel] = Mathf.RoundToInt (LevelManager.PARAS [4 * nextLevel] * adjust);
+		LevelManager.PARAS [4 * nextLevel + 1] = Mathf.RoundToInt (LevelManager.PARAS [4 * nextLevel + 1] / adjust);
+//		LevelManager.PARAS [4 * nextLevel + 2] = Mathf.RoundToInt (LevelManager.PARAS [4 * nextLevel + 2] / adjust);
+		LevelManager.PARAS [4 * nextLevel + 3] = Mathf.RoundToInt (LevelManager.PARAS [4 * nextLevel + 3] * adjust);
 	}
 
 	int CalcuPlayerRank(float timeLeft, int enemyKilled, int level){
@@ -56,9 +59,9 @@ public class DifficultyManager : MonoBehaviour {
 				rank = 4;
 			else if (timePercentage >= 0.4f)
 				rank = 3;
-			else if (timePercentage >= 0.3f)
+			else if (timePercentage >= 0.35f)
 				rank = 2;
-			else if (timePercentage >= 0.2f)
+			else if (timePercentage >= 0.3f)
 				rank = 1;
 			else
 				rank = 0;

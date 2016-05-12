@@ -18,9 +18,12 @@ public class GameController : MonoBehaviour
 	int enemyCount;
 	public float timeBetweenPickupSpawn;
 	int pickupCount;
+	int barrelCount;
 	int level;
 	float[] timer;
 	int enemyKilled;
+
+	bool isPlayAgain;
 
 	void Start ()
 	{
@@ -52,7 +55,7 @@ public class GameController : MonoBehaviour
 		if (timer[2] > timeBetweenPickupSpawn && pickupCount < LevelManager.PICKUPS(level)) {
 			SpawnPickup ();
 		}
-
+			
 		UIManager.instance.ShowLevel (level + 1);
 
 		timer [0] += Time.deltaTime;
@@ -64,6 +67,12 @@ public class GameController : MonoBehaviour
 			DestroyRestEnemies ();
 		}
 		UIManager.instance.ShowTime (LevelManager.TIME(level) - timer [0]);
+
+		Debug.Log (isPlayAgain);
+		if (isPlayAgain) {
+			Time.timeScale = 1;
+			isPlayAgain = false;
+		}
 
 	}
 
@@ -131,7 +140,8 @@ public class GameController : MonoBehaviour
 
 	public void LoadLevel(){
 		SceneManager.LoadScene (0);
-		Resume ();
+		isPlayAgain = true; 
+		Time.timeScale = 1;
 	}
 
 	public void Pause (){
