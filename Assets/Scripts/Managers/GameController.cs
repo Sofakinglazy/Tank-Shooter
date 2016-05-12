@@ -58,6 +58,7 @@ public class GameController : MonoBehaviour
 		timer [0] += Time.deltaTime;
 		if ((timer [0] > LevelManager.TIME(level) || enemyKilled == LevelManager.ENERMY(level)) && level < 10) {
 			UpdateLevelParas ();
+			UIManager.instance.ShowNextWaveBtn ();
 			level++;
 			Reset ();
 			DestroyRestEnemies ();
@@ -130,6 +131,7 @@ public class GameController : MonoBehaviour
 
 	public void LoadLevel(){
 		SceneManager.LoadScene (0);
+		Resume ();
 	}
 
 	public void Pause (){

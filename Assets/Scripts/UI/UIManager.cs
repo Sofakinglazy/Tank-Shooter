@@ -62,8 +62,13 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void ShowNextWaveBtn(){
-		Time.timeScale = 0;
+		GameController.instance.Pause ();
 		nextWaveBtn.gameObject.SetActive (true);
+	}
+
+	public void HideNextWaveBtn(){
+		GameController.instance.Resume ();
+		nextWaveBtn.gameObject.SetActive (false);
 	}
 
 	public void AddScore (int scorePoint){
