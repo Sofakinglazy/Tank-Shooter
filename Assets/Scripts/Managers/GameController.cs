@@ -10,8 +10,7 @@ public class GameController : MonoBehaviour
 	public Transform[] barrelSpawn;
 
 	public GameObject[] enemies;
-	public GameObject ammoPack;
-	public GameObject healthPack;
+	public GameObject[] pickups;
 	public GameObject barrel;
 	public Boundary boundary;
 
@@ -50,7 +49,7 @@ public class GameController : MonoBehaviour
 		}
 
 		timer[2] += Time.deltaTime;
-		if (timer[2] > timeBetweenPickupSpawn && pickupCount < LevelManager.HEALTH_PACK(level)) {
+		if (timer[2] > timeBetweenPickupSpawn && pickupCount < LevelManager.PICKUPS(level)) {
 			SpawnPickup ();
 		}
 
@@ -58,11 +57,23 @@ public class GameController : MonoBehaviour
 
 		timer [0] += Time.deltaTime;
 		if ((timer [0] > LevelManager.TIME(level) || enemyKilled == LevelManager.ENERMY(level)) && level < 10) {
+			UpdateLevelParas ();
 			level++;
 			Reset ();
 			DestroyRestEnemies ();
 		}
 		UIManager.instance.ShowTime (LevelManager.TIME(level) - timer [0]);
+
+	}
+
+	void UpdateLevelParas ()
+	{
+		if (timer [0] < LevelManager.TIME (level)) {
+			DifficultyManager.instance.UpdateLevelParas (LevelManager.TIME (level) - timer [0], 0, level);
+		}
+		else {
+			DifficultyManager.instance.UpdateLevelParas (0, enemyKilled, level);
+		}
 	}
 
 	void DestroyRestEnemies(){
@@ -75,6 +86,7 @@ public class GameController : MonoBehaviour
 	void Reset (){
 		enemyCount = 0;
 		pickupCount = 0;
+		enemyKilled = 0;
 		timer [0] = 0;
 	}
 		
@@ -91,7 +103,7 @@ public class GameController : MonoBehaviour
 
 	void SpawnBarrels ()
 	{ 
-		for (int i = 0; i < barrelSpawn.Length; i++) {
+		for (int i = 0; i < LevelManager.BARREL(level); i++) {
 			Instantiate (barrel, barrelSpawn [i].position, Quaternion.identity);
 		}
 	}
@@ -99,7 +111,8 @@ public class GameController : MonoBehaviour
 	void SpawnPickup ()
 	{
 		Vector3 randPos = new Vector3 (GetRandomNum (boundary.xMin, boundary.xMax), GetRandomNum (boundary.yMin, boundary.yMax), 0f);
-		Instantiate (healthPack, randPos, Quaternion.identity);
+		int pickupIdex = GetRandomNum (0f, pickups.Length - 1);
+		Instantiate (pickups[pickupIdex], randPos, Quaternion.identity);
 
 		timer[2] = 0f;
 		pickupCount++;
@@ -117,5 +130,13 @@ public class GameController : MonoBehaviour
 
 	public void LoadLevel(){
 		SceneManager.LoadScene (0);
+	}
+
+	public void Pause (){
+		Time.timeScale = 0;
+	}
+
+	public void Resume(){
+		Time.timeScale = 1;
 	}
 }

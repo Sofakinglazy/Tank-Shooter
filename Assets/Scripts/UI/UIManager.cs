@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour {
 	public Text scoreText;
 	public Image healthIcon;
 	public Slider healthSlider;
+	public Button nextWaveBtn;
 	public Text deadText;
 	public Button againBtn;
 
@@ -24,6 +25,7 @@ public class UIManager : MonoBehaviour {
 		levelText.enabled = true;
 		scoreText.enabled = true; 
 		healthIcon.enabled = true;
+		nextWaveBtn.gameObject.SetActive (false);
 		healthSlider.gameObject.SetActive(true);
 		deadText.gameObject.SetActive(false);
 		againBtn.gameObject.SetActive (false);
@@ -59,6 +61,11 @@ public class UIManager : MonoBehaviour {
 		this.level = level;
 	}
 
+	public void ShowNextWaveBtn(){
+		Time.timeScale = 0;
+		nextWaveBtn.gameObject.SetActive (true);
+	}
+
 	public void AddScore (int scorePoint){
 		score += scorePoint;
 	}
@@ -73,6 +80,7 @@ public class UIManager : MonoBehaviour {
 		deadText.gameObject.SetActive(true);
 		againBtn.gameObject.SetActive (true);
 		healthSlider.gameObject.SetActive(false);
+		nextWaveBtn.gameObject.SetActive (false);
 		timeText.enabled = false;
 		levelText.enabled = false;
 		scoreText.enabled = false;

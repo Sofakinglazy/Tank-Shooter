@@ -71,8 +71,6 @@ public class PlayerShooting : MonoBehaviour
 
 		currentAmmo--;
 
-		Debug.Log ("Ammo" + currentAmmo);
-
 		audioSource.clip = shootAudio;
         audioSource.Play ();
 
@@ -92,7 +90,6 @@ public class PlayerShooting : MonoBehaviour
 			if (shootHit.collider.CompareTag ("Enemy")) {
 				GameObject enemy = shootHit.collider.gameObject;
 				enemy.GetComponent<EnemyHealth> ().TakeDamage (damage, shootHit.point);
-				Debug.Log ("Enemy health: " + enemy.GetComponent<EnemyHealth>().currentHealth);
 			}
 
 			if (shootHit.collider.CompareTag ("Barrel")) {
@@ -126,6 +123,5 @@ public class PlayerShooting : MonoBehaviour
 
 	public void AddAmmo (int ammoAmount){
 		currentAmmo += ammoAmount;
-		Debug.Log ("current ammo:" + currentAmmo);
 	}
 }
